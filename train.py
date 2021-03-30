@@ -1,4 +1,8 @@
 import tensorflow as tf
+import os
+
+# Get the output path from the Valohai machines environment variables
+output_path = os.getenv('VH_OUTPUTS_DIR', '.outputs/')
 
 mnist = tf.keras.datasets.mnist
 
@@ -26,3 +30,5 @@ model.compile(optimizer='adam',
             metrics=['accuracy'])
 
 model.fit(x_train, y_train, epochs=5)
+model.save(os.path.join(output_path, 'model.h5'))
+
