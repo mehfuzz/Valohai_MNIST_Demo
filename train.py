@@ -1,8 +1,21 @@
 import tensorflow as tf
 import os
+import json
 
 # Get the output path from the Valohai machines environment variables
 output_path = os.getenv('VH_OUTPUTS_DIR', '.outputs/')
+
+
+
+def logMetadata(epoch,logs):
+            print()
+            print(json.dumps({
+                        'epoch':epoch,
+                        'loss':str(logs['loss']),
+                        'acc':str(logs['accuracy']),
+            }))
+
+metadataCallback = tf.keras.callbacks.LambdaCallback(on_epoch_end=logMetadata)
 
 mnist = tf.keras.datasets.mnist
 
